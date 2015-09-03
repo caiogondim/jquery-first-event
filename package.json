@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "npm test"
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,15 @@
   "bugs": {
     "url": "https://github.com/caiogondim/jquery-first-event/issues"
   },
-  "homepage": "https://github.com/caiogondim/jquery-first-event#readme"
+  "homepage": "https://github.com/caiogondim/jquery-first-event#readme",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "gulp": "^3.9.0",
+    "karma": "^0.13.9",
+    "karma-chai": "^0.1.0",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jquery": "^0.1.0",
+    "karma-mocha": "^0.2.0",
+    "mocha": "^2.3.0"
+  }
 }
