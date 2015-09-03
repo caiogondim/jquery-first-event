@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p>Lorem</p>
+    <p>Ipsum</p>
+    <p>Dolor</p>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="../src/index.js"></script>
+    <script>
+        $('p').on('click', function() {
+            console.log('1st regular event listener')
+        })
+        $('p').on('click', function() {
+            console.log('2nd regular event listener')
+        })
+        $('p').on('click', function() {
+            console.log('3rd regular event listener')
+        })
+
+        $('p').firstOn('click', function() {
+            console.log('jquery first event plugin')
+        })
+    </script>
+</body>
+</html>
