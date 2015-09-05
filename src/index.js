@@ -5,7 +5,7 @@
         return str.split(' ')
     }
 
-    $.fn.firstOn = function(eventsType, callback) {
+    $.fn.firstOn = $.fn.firstBind = function(eventsType, callback) {
         $.fn.on.apply(this, arguments)
 
         var eventsTypeArr = splitEventsType(eventsType)

@@ -36,6 +36,15 @@
             .firstOn('mousedown mouseup', function(event) {
                 console.log('firstOn ' + event.type)
             })
+
+        // firstBind
+        $('p')
+            .on('click', function() {
+                console.log('3rd regular event listener')
+            })
+            .firstBind('click', function() {
+                console.log('jquery first event plugin')
+            })
     </script>
 </body>
 </html>
