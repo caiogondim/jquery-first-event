@@ -26,7 +26,7 @@ it('should fire callback with `firstOn` before others', function() {
     assert.deepEqual(eventsOrder, ['first event', 'vanilla 1', 'vanilla 2'])
 })
 
-it('should work with multiple selector', function() {
+it('should work with multiple selectors', function() {
     var eventsOrder = []
 
     $('<p>').appendTo('body')
@@ -55,5 +55,28 @@ it('should work with multiple selector', function() {
         'first event',
         'vanilla 1',
         'vanilla 2',
+    ])
+})
+
+it('should work with multiple events', function() {
+    var eventsOrder = []
+
+    $('<p>').appendTo('body')
+
+    $('p')
+        .on('mouseup mousedown', function(event) {
+            eventsOrder.push('vanilla ' + event.type)
+        })
+        .firstOn('mouseup mousedown', function(event) {
+            eventsOrder.push('first event ' + event.type)
+        })
+        .trigger('mousedown')
+        .trigger('mouseup')
+
+    assert.deepEqual(eventsOrder, [
+        'first event mousedown',
+        'vanilla mousedown',
+        'first event mouseup',
+        'vanilla mouseup'
     ])
 })
