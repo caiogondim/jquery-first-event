@@ -45,6 +45,15 @@
             .firstBind('click', function() {
                 console.log('jquery first event plugin')
             })
+
+        // `firstDelegate`
+        $(document)
+            .firstDelegate('p', 'click', function() {
+                console.log('vanilla delegate');
+            })
+            .firstDelegate('p', 'click', function() {
+                console.log('`firstDelegate`');
+            })
     </script>
 </body>
 </html>
