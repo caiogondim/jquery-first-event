@@ -16,8 +16,8 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
           '../src/index.js',
-          'test.js',
-          'firstDelegate.js',
+          'first-on-and-first-bind.js',
+          'first-delegate.js',
         ],
 
         // list of files to exclude
