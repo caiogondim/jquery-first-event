@@ -17,7 +17,8 @@ module.exports = function (config) {
     files: [
       '../src/index.js',
       'first-on-and-first-bind.js',
-      'first-delegate.js'
+      'first-delegate.js',
+      'first-one.js'
     ],
 
     // list of files to exclude
