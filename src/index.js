@@ -2,9 +2,15 @@
 ;(function ($) {
   'use strict'
 
+  // Helpers
+  // -------
+
   function splitEventsString (str) {
     return str.split(' ')
   }
+
+  // jQuery methods
+  // --------------
 
   $.fn.firstOn = $.fn.firstBind = function (eventsType, callback) {
     $.fn.on.apply(this, arguments)
@@ -41,6 +47,25 @@
         events[event].unshift(events[event].pop())
       })
       $._data(el, 'events', events)
+    })
+
+    return this
+  }
+
+  $.fn.firstOne = function () {
+    var args = $.makeArray(arguments)
+    var eventsString = args[0]
+
+    $.fn.one.apply(this, args)
+
+    var eventsArray = splitEventsString(eventsString)
+
+    this.each(function (i, el) {
+      var events = $._data(el, 'events')
+
+      $.each(eventsArray, function (i, event) {
+        events[event].unshift(events[event].pop())
+      })
     })
 
     return this
