@@ -1,8 +1,8 @@
-/* global chai, $, describe, it, beforeEach */
+/* global describe, beforeEach, it, $, assert */
 
 'use strict'
 
-var assert = chai.assert
+require('./_configure-test-env')
 
 describe('firstDelegate', function () {
   beforeEach(function () {
