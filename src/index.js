@@ -70,4 +70,25 @@
 
     return this
   }
+
+  if (typeof $.fn.live === 'function') {
+    $.fn.firstLive = function () {
+      var args = $.makeArray(arguments)
+      var eventsString = args[0]
+
+      $.fn.live.apply(this, args)
+
+      var eventsArray = splitEventsString(eventsString)
+      var events = $._data(document, 'events').live
+
+      // Put the recently added event listeners on the beginning of the array
+      this.each(function (i, el) {
+        $.each(eventsArray, function (i, event) {
+          events.unshift(events.pop())
+        })
+      })
+
+      return this
+    }
+  }
 }(jQuery))
