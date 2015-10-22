@@ -9,6 +9,24 @@
     return str.split(' ')
   }
 
+  function getEventListeners (args) {
+    var el = args.el
+
+    if (isJqueryVersionLessThan1dot7()) {
+      return $(el).data('events')
+    } else {
+      return $._data(el, 'events')
+    }
+  }
+
+  function isJqueryVersionLessThan1dot7 () {
+    var jQueryVersion = $.fn.jquery.split('.')
+    var jQueryVersionMajor = Number(jQueryVersion[0])
+    var jQueryVersionMinor = Number(jQueryVersion[1])
+
+    return (jQueryVersionMajor === 1 && jQueryVersionMinor < 7)
+  }
+
   // jQuery methods
   // --------------
 
@@ -79,12 +97,22 @@
       $.fn.live.apply(this, args)
 
       var eventsArray = splitEventsString(eventsString)
-      var events = $._data(document, 'events').live
+      var eventsListeners = getEventListeners({el: document})
 
-      // Put the recently added event listeners on the beginning of the array
-      $.each(eventsArray, function (i, event) {
-        events.unshift(events.pop())
-      })
+      if (isJqueryVersionLessThan1dot7()) {
+        $.each(eventsArray, function (i, event) {
+          eventsListeners.live.unshift(eventsListeners.live.pop())
+        })
+      } else {
+        $.each(eventsArray, function (i, event) {
+          var curEventListeners = eventsListeners[event]
+          var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
+
+          delegatedListeners.unshift(delegatedListeners.pop())
+
+          Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
+        })
+      }
 
       return this
     }

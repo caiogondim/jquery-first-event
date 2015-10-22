@@ -8,7 +8,15 @@ var fs = require('fs')
 var chai = require('chai')
 global.assert = chai.assert
 
-;['jquery-1.6.4.js'].forEach(function (jqueryVersion) {
+// `live` was removed on jQuery 1.9
+
+;[
+  'jquery-1.4.4.js',
+  'jquery-1.5.2.js',
+  'jquery-1.6.4.js',
+  'jquery-1.7.2.js',
+  'jquery-1.8.3.js'
+].forEach(function (jqueryVersion) {
   describe('firstLive', function () {
     jsdom({
       src: [
