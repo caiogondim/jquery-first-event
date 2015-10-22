@@ -30,19 +30,67 @@
   // jQuery methods
   // --------------
 
-  $.fn.firstOn = $.fn.firstBind = function (eventsType, callback) {
-    $.fn.on.apply(this, arguments)
+  if (typeof $.fn.on === 'function') {
+    $.fn.firstOn = function () {
+      var args = $.makeArray(arguments)
 
-    var eventsTypeArr = splitEventsString(eventsType)
+      $.fn.on.apply(this, args)
+
+      var eventsString = args[0]
+      var eventsArray = splitEventsString(eventsString)
+
+      return this.each(function (i, el) {
+        var eventsListeners = getEventListeners({el: el})
+
+        if (isJqueryVersionLessThan1dot7()) {
+          // var events = $._data(el, 'events')
+
+          // $.each(eventsTypeArr, function (i, eventType) {
+          //   events[eventType].unshift(events[eventType].pop())
+          // })
+          // $._data(el, 'events', events)
+        } else {
+          $.each(eventsArray, function (i, event) {
+            var curEventListeners = eventsListeners[event]
+            var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
+
+            curEventListeners.unshift(curEventListeners.pop())
+
+            Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
+          })
+        }
+      })
+    }
+  }
+
+  $.fn.firstBind = function () {
+    var args = $.makeArray(arguments)
+
+    $.fn.bind.apply(this, args)
+
+    var eventsString = args[0]
+    var eventsArray = splitEventsString(eventsString)
 
     return this.each(function (i, el) {
-      var events = $._data(el, 'events')
+      var eventsListeners = getEventListeners({el: el})
 
-      // For every event listener attached, put it as first on the queue
-      $.each(eventsTypeArr, function (i, eventType) {
-        events[eventType].unshift(events[eventType].pop())
-      })
-      $._data(el, 'events', events)
+      if (isJqueryVersionLessThan1dot7()) {
+        // var events = $._data(el, 'events')
+
+        // $.each(eventsTypeArr, function (i, eventType) {
+        //   events[eventType].unshift(events[eventType].pop())
+        // })
+        // $._data(el, 'events', events)
+      } else {
+        $.each(eventsArray, function (i, event) {
+          var curEventListeners = eventsListeners[event]
+          var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
+
+          curEventListeners.unshift(curEventListeners.pop())
+
+          Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
+        })
+      }
     })
   }
 

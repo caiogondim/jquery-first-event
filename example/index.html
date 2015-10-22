@@ -9,7 +9,7 @@
     <p>Ipsum</p>
     <p>Dolor</p>
 
-    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+    <script src="../test/jquery/jquery-1.11.3.js"></script>
     <script src="../src/index.js"></script>
     <script>
         // Single event
@@ -19,41 +19,10 @@
         $('p').on('click', function() {
             console.log('2nd regular event listener')
         })
-        $('p').on('click', function() {
-            console.log('3rd regular event listener')
+        $('p').firstBind('click', function() {
+            console.log('first bind')
         })
 
-        $('p').firstOn('click', function() {
-            console.log('jquery first event plugin')
-        })
-
-        // Multiple events
-        $('p')
-            .off()
-            .on('mousedown mouseup', function(event) {
-                console.log('vanilla ' + event.type)
-            })
-            .firstOn('mousedown mouseup', function(event) {
-                console.log('firstOn ' + event.type)
-            })
-
-        // firstBind
-        $('p')
-            .on('click', function() {
-                console.log('3rd regular event listener')
-            })
-            .firstBind('click', function() {
-                console.log('jquery first event plugin')
-            })
-
-        // `firstDelegate`
-        $(document)
-            .firstDelegate('p', 'click', function() {
-                console.log('vanilla delegate');
-            })
-            .firstDelegate('p', 'click', function() {
-                console.log('`firstDelegate`');
-            })
     </script>
 </body>
 </html>
