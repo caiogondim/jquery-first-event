@@ -82,10 +82,8 @@
       var events = $._data(document, 'events').live
 
       // Put the recently added event listeners on the beginning of the array
-      this.each(function (i, el) {
-        $.each(eventsArray, function (i, event) {
-          events.unshift(events.pop())
-        })
+      $.each(eventsArray, function (i, event) {
+        events.unshift(events.pop())
       })
 
       return this

@@ -1,4 +1,4 @@
-/* global describe, beforeEach, $, before */
+/* global describe, beforeEach, $, before, it, assert */
 
 'use strict'
 
@@ -25,81 +25,89 @@ global.assert = chai.assert
       $('body *').remove()
     })
 
-    // it('should fire callback before others', function () {
-    //   var eventsOrder = []
+    it('should fire callback before others', function () {
+      var eventsOrder = []
 
-    //   $('<p>').appendTo('body')
+      $('<p>').appendTo('body')
 
-    //   $('p')
-    //     .live('click', function () {
-    //       eventsOrder.push('vanilla 1')
-    //     })
-    //     .live('click', function () {
-    //       eventsOrder.push('vanilla 2')
-    //     })
-    //     .firstLive('click', function () {
-    //       eventsOrder.push('first event')
-    //     })
-    //     .trigger('click')
+      $('p')
+        .live('click', function () {
+          eventsOrder.push('vanilla 1')
+        })
+        .live('click', function () {
+          eventsOrder.push('vanilla 2')
+        })
+        .firstLive('click', function () {
+          eventsOrder.push('first event')
+        })
+        .trigger('click')
 
-    //   assert.deepEqual(eventsOrder, ['first event', 'vanilla 1', 'vanilla 2'])
-    // })
+      assert.deepEqual(eventsOrder, ['first event', 'vanilla 1', 'vanilla 2'])
+    })
 
-    // it('should work with multiple selectors', function () {
-    //   var eventsOrder = []
+    it('should work with multiple selectors', function () {
+      var eventsOrder = []
 
-    //   $('<p>').appendTo('body')
-    //   $('<div>').appendTo('body')
-    //   $('<span>').appendTo('body')
+      $('<p>').appendTo('body')
+      $('<div>').appendTo('body')
 
-    //   $('p, div, span')
-    //     .live('click', function () {
-    //       eventsOrder.push('vanilla 1')
-    //     })
-    //     .live('click', function () {
-    //       eventsOrder.push('vanilla 2')
-    //     })
-    //     .firstLive('click', function () {
-    //       eventsOrder.push('first event')
-    //     })
-    //     .trigger('click')
-    //     .trigger('click')
-    //     .trigger('click')
+      $('p, div, span')
+        .live('click', function () {
+          eventsOrder.push('vanilla 1')
+        })
+        .live('click', function () {
+          eventsOrder.push('vanilla 2')
+        })
+        .firstLive('click', function () {
+          eventsOrder.push('first event')
+        })
+        .trigger('click')
+        .trigger('click')
+        .trigger('click')
 
-    //   assert.deepEqual(eventsOrder, [
-    //     'first event',
-    //     'vanilla 1',
-    //     'vanilla 2',
-    //     'first event',
-    //     'vanilla 1',
-    //     'vanilla 2',
-    //     'first event',
-    //     'vanilla 1',
-    //     'vanilla 2'
-    //   ])
-    // })
+      assert.deepEqual(eventsOrder, [
+        'first event',
+        'vanilla 1',
+        'vanilla 2',
+        'first event',
+        'vanilla 1',
+        'vanilla 2',
+        'first event',
+        'vanilla 1',
+        'vanilla 2',
+        'first event',
+        'vanilla 1',
+        'vanilla 2',
+        'first event',
+        'vanilla 1',
+        'vanilla 2',
+        'first event',
+        'vanilla 1',
+        'vanilla 2'
+      ])
+    })
 
-    // it('should work with multiple events', function () {
-    //   var eventsOrder = []
+    it('should work with multiple events', function () {
+      var eventsOrder = []
 
-    //   $('<p>').appendTo('body')
+      $('<p>').appendTo('body')
 
-    //   $('p')
-    //     .live('mouseup mousedown', function (event) {
-    //       eventsOrder.push('vanilla ' + event.type)
-    //     })
-    //     .firstLive('mouseup mousedown', function (event) {
-    //       eventsOrder.push('first event ' + event.type)
-    //     })
-    //     .trigger('mousedown')
-    //     .trigger('mouseup')
+      $('p')
+        .live('mouseup mousedown', function (event) {
+          eventsOrder.push('vanilla ' + event.type)
+        })
+        .firstLive('mouseup mousedown', function (event) {
+          eventsOrder.push('first event ' + event.type)
+        })
+        .trigger('mousedown')
+        .trigger('mouseup')
 
-    //   assert.deepEqual(eventsOrder, [
-    //     'first event mousedown',
-    //     'vanilla mousedown',
-    //     'first event mouseup',
-    //     'vanilla mouseup'
-    //   ])
-    // })
+      assert.deepEqual(eventsOrder, [
+        'first event mousedown',
+        'vanilla mousedown',
+        'first event mouseup',
+        'vanilla mouseup'
+      ])
+    })
   })
 })
