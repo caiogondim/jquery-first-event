@@ -7,7 +7,16 @@ var fs = require('fs')
 var chai = require('chai')
 global.assert = chai.assert
 
-;['1.11.3'].forEach(function (jQueryVersion) {
+;[
+  '1.4.4',
+  '1.5.2',
+  '1.6.4',
+  '1.7.2',
+  '1.8.3',
+  '1.9.1',
+  '1.10.2',
+  '1.11.3'
+].forEach(function (jQueryVersion) {
   describe('firstBind jQuery v' + jQueryVersion, function () {
     jsdom({
       src: [
@@ -26,10 +35,10 @@ global.assert = chai.assert
       $('<p>').appendTo('body')
 
       $('p')
-        .on('click', function () {
+        .bind('click', function () {
           eventsOrder.push('vanilla 1')
         })
-        .on('click', function () {
+        .bind('click', function () {
           eventsOrder.push('vanilla 2')
         })
         .firstBind('click', function () {
@@ -48,10 +57,10 @@ global.assert = chai.assert
       $('<span>').appendTo('body')
 
       $('p, div, span')
-        .on('click', function () {
+        .bind('click', function () {
           eventsOrder.push('vanilla 1')
         })
-        .on('click', function () {
+        .bind('click', function () {
           eventsOrder.push('vanilla 2')
         }).firstBind('click', function () {
           eventsOrder.push('first event')
@@ -77,7 +86,7 @@ global.assert = chai.assert
       $('<p>').appendTo('body')
 
       $('p')
-        .on('mouseup mousedown', function (event) {
+        .bind('mouseup mousedown', function (event) {
           eventsOrder.push('vanilla ' + event.type)
         }).firstBind('mouseup mousedown', function (event) {
           eventsOrder.push('first event ' + event.type)

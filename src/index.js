@@ -75,12 +75,9 @@
       var eventsListeners = getEventListeners({el: el})
 
       if (isJqueryVersionLessThan1dot7()) {
-        // var events = $._data(el, 'events')
-
-        // $.each(eventsTypeArr, function (i, eventType) {
-        //   events[eventType].unshift(events[eventType].pop())
-        // })
-        // $._data(el, 'events', events)
+        $.each(eventsArray, function (i, event) {
+          eventsListeners[event].unshift(eventsListeners[event].pop())
+        })
       } else {
         $.each(eventsArray, function (i, event) {
           var curEventListeners = eventsListeners[event]
