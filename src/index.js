@@ -19,6 +19,44 @@
     }
   }
 
+  function makeLastEventListenerFirst (opts) {
+    var elements = opts.elements
+    var events = opts.events
+    var isDelegated = opts.isDelegated || false
+
+    var eventsListeners = getEventListeners({el: document})
+
+    elements.each(function (i, el) {
+      $.each(events, function (i, event) {
+        if (isJqueryVersionLessThan1dot7()) {
+          if (isDelegated) {
+            eventsListeners.live.unshift(eventsListeners.live.pop())
+          } else {
+            eventsListeners.unshift(eventsListeners.pop())
+          }
+        } else {
+          var curEventListeners = eventsListeners[event]
+          var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
+          var vanillaListeners = curEventListeners.slice(curEventListeners.delegateCount)
+
+          if (isDelegated) {
+            delegatedListeners.unshift(delegatedListeners.pop())
+            Array.prototype.splice.apply(
+              curEventListeners,
+              [0, curEventListeners.delegateCount].concat(delegatedListeners)
+            )
+          } else {
+            vanillaListeners.unshift(vanillaListeners.pop())
+            Array.prototype.splice.apply(
+              curEventListeners,
+              [curEventListeners.delegateCount, vanillaListeners.length].concat(vanillaListeners)
+            )
+          }
+        }
+      })
+    })
+  }
+
   function isJqueryVersionLessThan1dot7 () {
     var jQueryVersion = $.fn.jquery.split('.')
     var jQueryVersionMajor = Number(jQueryVersion[0])
@@ -101,15 +139,10 @@
 
     $.fn.delegate.apply(this, arguments)
 
-    var eventsArray = splitEventsString(eventsString)
-
-    this.each(function (i, el) {
-      var events = $._data(el, 'events')
-
-      $.each(eventsArray, function (i, event) {
-        events[event].unshift(events[event].pop())
-      })
-      $._data(el, 'events', events)
+    makeLastEventListenerFirst({
+      elements: this,
+      events: splitEventsString(eventsString),
+      isDelegated: true
     })
 
     return this
