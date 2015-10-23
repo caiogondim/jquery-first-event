@@ -140,14 +140,9 @@
 
     $.fn.one.apply(this, args)
 
-    var eventsArray = splitEventsString(eventsString)
-
-    this.each(function (i, el) {
-      var events = $._data(el, 'events')
-
-      $.each(eventsArray, function (i, event) {
-        events[event].unshift(events[event].pop())
-      })
+    makeLastEventListenerFirst({
+      elements: this,
+      events: splitEventsString(eventsString)
     })
 
     return this

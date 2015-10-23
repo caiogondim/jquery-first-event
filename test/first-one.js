@@ -7,7 +7,16 @@ var fs = require('fs')
 var chai = require('chai')
 global.assert = chai.assert
 
-;['1.11.3'].forEach(function (jQueryVersion) {
+;[
+  '1.4.4',
+  '1.5.2',
+  '1.6.4',
+  '1.7.2',
+  '1.8.3',
+  '1.9.1',
+  '1.10.2',
+  '1.11.3'
+].forEach(function (jQueryVersion) {
   describe('firstOne jQuery v' + jQueryVersion, function () {
     jsdom({
       src: [
