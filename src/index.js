@@ -24,15 +24,15 @@
     var events = opts.events
     var isDelegated = opts.isDelegated || false
 
-    var eventsListeners = getEventListeners({el: document})
+    elements.each(function (i, element) {
+      var eventsListeners = getEventListeners({el: element})
 
-    elements.each(function (i, el) {
       $.each(events, function (i, event) {
         if (isJqueryVersionLessThan1dot7()) {
           if (isDelegated) {
             eventsListeners.live.unshift(eventsListeners.live.pop())
           } else {
-            eventsListeners.unshift(eventsListeners.pop())
+            eventsListeners[event].unshift(eventsListeners[event].pop())
           }
         } else {
           var curEventListeners = eventsListeners[event]
@@ -103,30 +103,16 @@
 
   $.fn.firstBind = function () {
     var args = $.makeArray(arguments)
+    var eventsString = args[0]
 
     $.fn.bind.apply(this, args)
 
-    var eventsString = args[0]
-    var eventsArray = splitEventsString(eventsString)
-
-    return this.each(function (i, el) {
-      var eventsListeners = getEventListeners({el: el})
-
-      if (isJqueryVersionLessThan1dot7()) {
-        $.each(eventsArray, function (i, event) {
-          eventsListeners[event].unshift(eventsListeners[event].pop())
-        })
-      } else {
-        $.each(eventsArray, function (i, event) {
-          var curEventListeners = eventsListeners[event]
-          var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
-
-          curEventListeners.unshift(curEventListeners.pop())
-
-          Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
-        })
-      }
+    makeLastEventListenerFirst({
+      elements: this,
+      events: splitEventsString(eventsString)
     })
+
+    return this
   }
 
   $.fn.firstDelegate = function () {

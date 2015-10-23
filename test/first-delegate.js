@@ -34,7 +34,7 @@ global.assert = chai.assert
 
       $('<p>').appendTo('body')
 
-      $(document)
+      $('body')
         .delegate('p', 'click', function () {
           eventsOrder.push('vanilla 1')
         })
@@ -55,7 +55,7 @@ global.assert = chai.assert
 
       $('<p>').appendTo('body')
 
-      $(document)
+      $('body')
         .delegate('p', 'mouseup mousedown', function (event) {
           eventsOrder.push('vanilla ' + event.type)
         })
