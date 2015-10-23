@@ -1,24 +1,19 @@
-/* global describe, beforeEach, it, $, assert, before */
+/* global describe, beforeEach, it, $, assert */
 
 'use strict'
 
-var gulpUtil = require('gulp-util')
 var jsdom = require('mocha-jsdom')
 var fs = require('fs')
 var chai = require('chai')
 global.assert = chai.assert
 
-;['jquery-1.11.3.js'].forEach(function (jqueryVersion) {
-  describe('firstOne', function () {
+;['1.11.3'].forEach(function (jQueryVersion) {
+  describe('firstOne jQuery v' + jQueryVersion, function () {
     jsdom({
       src: [
-        fs.readFileSync('./test/jquery/' + jqueryVersion, 'utf-8'),
+        fs.readFileSync('./test/jquery/jquery-' + jQueryVersion + '.js', 'utf-8'),
         fs.readFileSync('./src/index.js')
       ]
-    })
-
-    before(function () {
-      gulpUtil.log(jqueryVersion)
     })
 
     beforeEach(function () {

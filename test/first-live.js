@@ -1,8 +1,7 @@
-/* global describe, beforeEach, $, before, it, assert */
+/* global describe, beforeEach, $, it, assert */
 
 'use strict'
 
-var gulpUtil = require('gulp-util')
 var jsdom = require('mocha-jsdom')
 var fs = require('fs')
 var chai = require('chai')
@@ -11,22 +10,18 @@ global.assert = chai.assert
 // `live` was removed on jQuery 1.9
 
 ;[
-  'jquery-1.4.4.js',
-  'jquery-1.5.2.js',
-  'jquery-1.6.4.js',
-  'jquery-1.7.2.js',
-  'jquery-1.8.3.js'
-].forEach(function (jqueryVersion) {
-  describe('firstLive', function () {
+  '1.4.4',
+  '1.5.2',
+  '1.6.4',
+  '1.7.2',
+  '1.8.3'
+].forEach(function (jQueryVersion) {
+  describe('firstLive jQuery v' + jQueryVersion, function () {
     jsdom({
       src: [
-        fs.readFileSync('./test/jquery/' + jqueryVersion, 'utf-8'),
+        fs.readFileSync('./test/jquery/jquery-' + jQueryVersion + '.js', 'utf-8'),
         fs.readFileSync('./src/index.js')
       ]
-    })
-
-    before(function () {
-      gulpUtil.log(jqueryVersion)
     })
 
     beforeEach(function () {
