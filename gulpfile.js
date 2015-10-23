@@ -12,7 +12,7 @@ gulp.task('standard', function () {
   }))
 })
 
-gulp.task('mocha', function () {
+gulp.task('mocha', ['standard'], function () {
   return gulp
     .src(['test/*.js'])
     .pipe(mocha())
