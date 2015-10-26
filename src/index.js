@@ -20,7 +20,6 @@
   }
 
   function makeLastEventListenerFirst (opts) {
-
     // For jQuery >= 1.7, the event data structure can be obtained by
     // `$._data(el, 'events')`. All delegated event listeners will be in the
     // same array as regular event listeners. You have to check the `delegateCount`
