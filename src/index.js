@@ -20,6 +20,68 @@
   }
 
   function makeLastEventListenerFirst (opts) {
+
+    // For jQuery >= 1.7, the event data structure can be obtained by
+    // `$._data(el, 'events')`. All delegated event listeners will be in the
+    // same array as regular event listeners. You have to check the `delegateCount`
+    // property. If > 0, then there is delegated events on this element. The
+    // first event listeners will always be the delegated ones.
+    //
+    // Eg.:
+    //   {
+    //     "click": [
+    //       {
+    //         "type": "click",
+    //         "origType": "click",
+    //         "guid": 6,
+    //         "selector": "span",
+    //         "needsContext": false,
+    //         "namespace": ""
+    //       },
+    //       {
+    //         "type": "click",
+    //         "origType": "click",
+    //         "guid": 2,
+    //         "namespace": ""
+    //       },
+    //       {
+    //         "type": "click",
+    //         "origType": "click",
+    //         "guid": 5,
+    //         "namespace": ""
+    //       },
+    //       delegateCount: 1
+    //     ]
+    //   }
+
+    // For jQuery < 1.7, the event data structure can be obtained by
+    // `$._data(el, 'events')`. All delegated event listeners will be inside an
+    // array on the `live` object key.
+    //
+    // Eg.:
+    //   {
+    //     "live": [
+    //       {
+    //         "selector": "p",
+    //         "origType": "click",
+    //         "preType": "click",
+    //         "namespace": "click.p",
+    //         "type": "live",
+    //         "guid": 4
+    //       }
+    //     ],
+    //     "click": [
+    //       {
+    //         "selector": "p",
+    //         "origType": "click",
+    //         "preType": "click",
+    //         "namespace": "p",
+    //         "type": "click",
+    //         "guid": 1
+    //       }
+    //     ]
+    //   }
+
     var elements = opts.elements
     var events = opts.events
     var isDelegated = opts.isDelegated || false
