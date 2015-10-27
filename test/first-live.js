@@ -1,4 +1,4 @@
-/* global describe, beforeEach, $, it, assert */
+/* global describe, beforeEach, $, it, assert, expect */
 
 'use strict'
 
@@ -6,6 +6,7 @@ var jsdom = require('mocha-jsdom')
 var fs = require('fs')
 var chai = require('chai')
 global.assert = chai.assert
+global.expect = chai.expect
 
 // `live` was removed on jQuery 1.9
 
@@ -111,6 +112,30 @@ global.assert = chai.assert
         'first event mouseup',
         'vanilla mouseup'
       ])
+    })
+  })
+})
+
+;[
+  '1.9.1',
+  '1.10.2',
+  '1.11.3'
+].forEach(function (jQueryVersion) {
+  describe('firstLive jQuery v' + jQueryVersion, function () {
+    jsdom({
+      src: [
+        fs.readFileSync('./test/jquery/jquery-' + jQueryVersion + '.js', 'utf-8'),
+        fs.readFileSync('./src/index.js')
+      ]
+    })
+
+    it('should throw error', function () {
+      expect(function () {
+        $('p').firstLive('click', $.noop)
+      })
+      .to.throw(
+        '`firstLive` needs the method `live` and this jQuery version doesn\'t support it'
+      )
     })
   })
 })

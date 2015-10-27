@@ -204,32 +204,36 @@
     return this
   }
 
-  if (typeof $.fn.live === 'function') {
-    $.fn.firstLive = function () {
-      var args = $.makeArray(arguments)
-      var eventsString = args[0]
-
-      $.fn.live.apply(this, args)
-
-      var eventsArray = splitEventsString(eventsString)
-      var eventsListeners = getEventListeners({el: document})
-
-      if (isJqueryVersionLessThan1dot7()) {
-        $.each(eventsArray, function (i, event) {
-          eventsListeners.live.unshift(eventsListeners.live.pop())
-        })
-      } else {
-        $.each(eventsArray, function (i, event) {
-          var curEventListeners = eventsListeners[event]
-          var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
-
-          delegatedListeners.unshift(delegatedListeners.pop())
-
-          Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
-        })
-      }
-
-      return this
+  $.fn.firstLive = function () {
+    if (typeof $.fn.live !== 'function') {
+      throw new Error(
+        '`firstLive` needs the method `live` and this jQuery version doesn\'t support it'
+      )
     }
+
+    var args = $.makeArray(arguments)
+    var eventsString = args[0]
+
+    $.fn.live.apply(this, args)
+
+    var eventsArray = splitEventsString(eventsString)
+    var eventsListeners = getEventListeners({el: document})
+
+    if (isJqueryVersionLessThan1dot7()) {
+      $.each(eventsArray, function (i, event) {
+        eventsListeners.live.unshift(eventsListeners.live.pop())
+      })
+    } else {
+      $.each(eventsArray, function (i, event) {
+        var curEventListeners = eventsListeners[event]
+        var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
+
+        delegatedListeners.unshift(delegatedListeners.pop())
+
+        Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
+      })
+    }
+
+    return this
   }
 }(jQuery))
