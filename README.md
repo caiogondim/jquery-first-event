@@ -127,6 +127,12 @@ All the below jQuery versions:
 5. Run `npm test` to ensure that your new tests and the old ones are all passing
 6. Send a pull request from each feature branch
 
+## Donating
+
+If you found this library useful and are willing to donate, transfer some
+bitcoins to `1BqqKiZA8Tq43CdukdBEwCdDD42jxuX9UY` or through the
+[URL](https://www.coinbase.com/caiogondim) https://www.coinbase.com/caiogondim
+
 ## Credits
 
 - Icon created by 0gust1 from the Noun Project
