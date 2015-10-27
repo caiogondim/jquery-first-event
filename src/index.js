@@ -129,37 +129,32 @@
   // jQuery methods
   // --------------
 
-  if (typeof $.fn.on === 'function') {
-    $.fn.firstOn = function () {
-      var args = $.makeArray(arguments)
-
-      $.fn.on.apply(this, args)
-
-      var eventsString = args[0]
-      var eventsArray = splitEventsString(eventsString)
-
-      return this.each(function (i, el) {
-        var eventsListeners = getEventListeners({el: el})
-
-        if (isJqueryVersionLessThan1dot7()) {
-          // var events = $._data(el, 'events')
-
-          // $.each(eventsTypeArr, function (i, eventType) {
-          //   events[eventType].unshift(events[eventType].pop())
-          // })
-          // $._data(el, 'events', events)
-        } else {
-          $.each(eventsArray, function (i, event) {
-            var curEventListeners = eventsListeners[event]
-            var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
-
-            curEventListeners.unshift(curEventListeners.pop())
-
-            Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
-          })
-        }
-      })
+  $.fn.firstOn = function () {
+    if (typeof $.fn.on !== 'function') {
+      throw new Error(
+        '`firstOn` needs the method `on` and this jQuery version doesn\'t support it'
+      )
     }
+
+    var args = $.makeArray(arguments)
+
+    $.fn.on.apply(this, args)
+
+    var eventsString = args[0]
+    var eventsArray = splitEventsString(eventsString)
+
+    return this.each(function (i, el) {
+      var eventsListeners = getEventListeners({el: el})
+
+      $.each(eventsArray, function (i, event) {
+        var curEventListeners = eventsListeners[event]
+        var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
+
+        curEventListeners.unshift(curEventListeners.pop())
+
+        Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
+      })
+    })
   }
 
   $.fn.firstBind = function () {
