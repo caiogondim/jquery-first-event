@@ -216,23 +216,11 @@
 
     $.fn.live.apply(this, args)
 
-    var eventsArray = splitEventsString(eventsString)
-    var eventsListeners = getEventListeners({el: document})
-
-    if (isJqueryVersionLessThan1dot7()) {
-      $.each(eventsArray, function (i, event) {
-        eventsListeners.live.unshift(eventsListeners.live.pop())
-      })
-    } else {
-      $.each(eventsArray, function (i, event) {
-        var curEventListeners = eventsListeners[event]
-        var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
-
-        delegatedListeners.unshift(delegatedListeners.pop())
-
-        Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
-      })
-    }
+    makeLastEventListenerFirst({
+      elements: $(document),
+      events: splitEventsString(eventsString),
+      isDelegated: true
+    })
 
     return this
   }

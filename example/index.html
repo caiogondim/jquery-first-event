@@ -9,20 +9,16 @@
     <p>Ipsum</p>
     <p>Dolor</p>
 
-    <script src="../test/jquery/jquery-1.11.3.js"></script>
+    <script src="../test/jquery/jquery-1.8.3.js"></script>
     <script src="../src/index.js"></script>
     <script>
-        // Single event
-        $('p').on('click', function() {
-            console.log('1st regular event listener')
-        })
-        $('p').on('click', function() {
-            console.log('2nd regular event listener')
-        })
-        $('p').firstBind('click', function() {
-            console.log('first bind')
+        $('p').live('click', function() {
+            console.log('vanilla click')
         })
 
+        $('p').firstLive('click', function() {
+            console.log('first live')
+        });
     </script>
 </body>
 </html>
