@@ -119,7 +119,9 @@ global.expect = chai.expect
 ;[
   '1.9.1',
   '1.10.2',
-  '1.11.3'
+  '1.11.3',
+  '2.0.3',
+  '2.1.4'
 ].forEach(function (jQueryVersion) {
   describe('firstLive jQuery v' + jQueryVersion, function () {
     jsdom({
