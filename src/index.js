@@ -141,20 +141,13 @@
     $.fn.on.apply(this, args)
 
     var eventsString = args[0]
-    var eventsArray = splitEventsString(eventsString)
 
-    return this.each(function (i, el) {
-      var eventsListeners = getEventListeners({el: el})
-
-      $.each(eventsArray, function (i, event) {
-        var curEventListeners = eventsListeners[event]
-        var delegatedListeners = curEventListeners.slice(0, curEventListeners.delegateCount)
-
-        curEventListeners.unshift(curEventListeners.pop())
-
-        Array.prototype.splice.apply(curEventListeners, [0, curEventListeners.delegateCount].concat(delegatedListeners))
-      })
+    makeLastEventListenerFirst({
+      elements: this,
+      events: splitEventsString(eventsString)
     })
+
+    return this
   }
 
   $.fn.firstBind = function () {
