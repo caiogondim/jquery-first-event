@@ -1,6 +1,6 @@
 {
   "name": "jquery-first-event",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "jQuery plugin to listen to an event and execute it before other listeners callbacks",
   "main": "dist/index.js",
   "directories": {
