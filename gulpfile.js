@@ -3,6 +3,11 @@
 var gulp = require('gulp')
 var standard = require('gulp-standard')
 var mocha = require('gulp-mocha')
+const header = require('gulp-header')
+const pkg = require('./package.json')
+
+// Test
+// ----
 
 gulp.task('standard', function () {
   return gulp.src(['./src/index.js', './test/*', 'gulpfile.js'])
@@ -19,3 +24,23 @@ gulp.task('mocha', ['standard'], function () {
 })
 
 gulp.task('test', ['standard', 'mocha'])
+
+// Build
+// -----
+
+gulp.task('build', () => {
+  const banner = [
+    '/**',
+    ' * <%= pkg.name %> - <%= pkg.description %>',
+    ' *',
+    ' * @version v<%= pkg.version %>',
+    ' * @link <%= pkg.homepage %>',
+    ' * @author <%= pkg.author %>',
+    ' * @license <%= pkg.license %>',
+    ' */',
+    ''].join('\n')
+
+  return gulp.src('./src/index.js')
+    .pipe(header(banner, {pkg}))
+    .pipe(gulp.dest('./dist'))
+})
