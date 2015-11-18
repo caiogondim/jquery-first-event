@@ -1,23 +1,23 @@
 'use strict'
 
-var gulp = require('gulp')
-var standard = require('gulp-standard')
-var mocha = require('gulp-mocha')
+const gulp = require('gulp')
+const standard = require('gulp-standard')
+const mocha = require('gulp-mocha')
 const header = require('gulp-header')
 const pkg = require('./package.json')
 
 // Test
 // ----
 
-gulp.task('standard', function () {
+gulp.task('standard', () => {
   return gulp.src(['./src/index.js', './test/*', 'gulpfile.js'])
-  .pipe(standard())
-  .pipe(standard.reporter('default', {
-    breakOnError: true
-  }))
+    .pipe(standard())
+    .pipe(standard.reporter('default', {
+      breakOnError: true
+    }))
 })
 
-gulp.task('mocha', ['standard'], function () {
+gulp.task('mocha', ['standard'], () => {
   return gulp
     .src(['test/*.js'])
     .pipe(mocha())
