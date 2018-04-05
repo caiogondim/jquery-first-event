@@ -1,8 +1,14 @@
 <img src="http://rawgit.com/caiogondim/jquery-first-event/master/img/logo.svg">
 
-# jQuery First event
+# jquery-first-event
 
 Execute your event handler before others.
+
+## Installation
+
+```
+npm install --save jquery-first-event
+```
 
 ## Example
 
@@ -117,23 +123,6 @@ All the below jQuery versions:
 - 1.11
 - 2.0
 - 2.1
-
-## Contributing
-
-1. Fork this repository
-2. Run `npm install`
-3. Create a new branch for each feature or improvement
-4. Ensure that your code is accompanied with tests
-5. Run `npm test` to ensure that your new tests and the old ones are all passing
-6. Send a pull request from each feature branch
-
-## Donating
-
-If you found this library useful and are willing to donate, transfer some
-bitcoins to `1BqqKiZA8Tq43CdukdBEwCdDD42jxuX9UY` or through the
-[URL](https://www.coinbase.com/caiogondim) https://www.coinbase.com/caiogondim
-
-Or via [PayPal.me](https://www.paypal.me/caiogondim) https://www.paypal.me/caiogondim.
 
 ## Credits
 
